@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#define _POSIX_C_SOURCE 200809L
 
 #define STACK 0
 #define QUEUE 1
@@ -73,9 +74,5 @@ void _rotl(stack_t **stack, unsigned int line_number);
 void _rotr(stack_t **stack, unsigned int line_number);
 void _stack(stack_t **stack, unsigned int line_number);
 void _queue(stack_t **stack, unsigned int line_number);
-<<<<<<< HEAD
-=======
-void _pushmode(int mode, stack_t **stack, stack_t *new_node);
->>>>>>> 22140eeb2bb29f9b16d819e888e8d4d30e419f67
 
 #endif
