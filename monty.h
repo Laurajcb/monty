@@ -1,6 +1,15 @@
 #ifndef MONTY_H
 #define MONTY_H
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#define STACK 0
+#define QUEUE 1
+#define DELIMS " \n\t\a\b"
+
+/* GLOBAL OPCODE TOKENS */
+extern char **op_toks;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -32,29 +41,37 @@ typedef struct instruction_s
     void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/**
- * struct vars_global - global variables for monty interpreter
- * @argv: arguments from the stdint
- * @line_n: number of the lines to process
- * @cmd: command 
- * @op: opcode from the instructions structure
- * @stack: pointer to stack
- *
- * Description: global variables for monty interpreter
- * for stack, queues, LIFO, FIFO Holberton project
- */
-typedef struct vars_global
-{
-    char **argv;
-    unsigned int line_n;
-    char *op;
-    char *cmd;
-    stack_t *stack;
-} global_t;
-global_t *global;
+/*PRIMARY INTERPRETER FUNCTIONS */
 
+void free_stack(stack_t **stack);
+int init_stack(stack_t **stack);
+int check_mode(stack_t *stack);
+void free_tokens(void);
+unsigned int token_arr_len(void);
+int run_monty(FILE *script_fd);
+void set_op_tok_error(int error_code);
+
+/* CUSTOM STANDARD LIBRARY FUNCTIONS */
+char **strtow(char *str, char *delims);
+char *get_int(int n);
+
+/* OPCODE FUNCTIONS */
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void div(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void rotr(stack_t **stack, unsigned int line_number);
+void stack(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
 
 #endif
