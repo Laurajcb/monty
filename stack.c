@@ -1,7 +1,6 @@
 #include "monty.h"
 #include <string.h>
 
-typedef int make_iso_compilers_happy;
 void free_stack(stack_t **stack);
 int init_stack(stack_t **stack);
 

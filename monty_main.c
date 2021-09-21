@@ -3,8 +3,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-typedef int make_iso_compilers_happy;
-char **op_toks = NULL;
 
 /**
  * main - the entry point for Monty Interp
