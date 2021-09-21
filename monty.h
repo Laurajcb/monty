@@ -1,5 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
+#include <stdio.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -30,5 +31,30 @@ typedef struct instruction_s
     char *opcode;
     void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+/**
+ * struct vars_global - global variables for monty interpreter
+ * @argv: arguments from the stdint
+ * @line_n: number of the lines to process
+ * @cmd: command 
+ * @op: opcode from the instructions structure
+ * @stack: pointer to stack
+ *
+ * Description: global variables for monty interpreter
+ * for stack, queues, LIFO, FIFO Holberton project
+ */
+typedef struct vars_global
+{
+    char **argv;
+    unsigned int line_n;
+    char *op;
+    char *cmd;
+    stack_t *stack;
+} global_t;
+global_t *global;
+
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 
 #endif
