@@ -8,14 +8,14 @@
 
 void _push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new_node = NULL, *tmp = NULL;
+	stack_t *new_node = NULL;
 	unsigned int i = 0;
 
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		set_op_tok_error(malloc_error());
-		return (NULL);
+		return;
 	}
 	if (op_toks[1] == NULL)
 	{

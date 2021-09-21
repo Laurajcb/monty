@@ -99,6 +99,6 @@ void _mul(stack_t **stack, unsigned int line_number)
 	}
 	result = (*stack)->next->next->n * (*stack)->next->n;
 
-	set_op_tok_error(div_error(line_number));
+	(*stack)->next->next->n = result;
 	_pop(stack, line_number);
 }
