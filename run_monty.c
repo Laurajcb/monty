@@ -1,7 +1,5 @@
 #include "monty.h"
 #include <string.h>
-#define _GNU_SOURCE
-#define _POSIX_C_SOURCE 200809L
 
 void free_tokens(void);
 unsigned int token_arr_len(void);
@@ -117,6 +115,7 @@ int run_monty(FILE *script_fd)
 	size_t len = 0, exit_status = EXIT_SUCCESS;
 	unsigned int line_number = 0, prev_tok_len = 0;
 	void (*op_func)(stack_t**, unsigned int);
+	char **op_toks = NULL;
 
 	if (init_stack(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
