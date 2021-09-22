@@ -36,9 +36,7 @@ void _push(stack_t **stack, unsigned int line_number)
 
 	if (check_mode(*stack) == STACK) /* STACK mode insert at front */
 	{
-		tmp = (*stack)->next;
-		new->prev = *stack;
-		new->next = tmp;
+		tmp = (*stack)->next, new->prev = *stack, new->next = tmp;
 		if (tmp)
 			tmp->prev = new;
 		(*stack)->next = new;
@@ -48,9 +46,7 @@ void _push(stack_t **stack, unsigned int line_number)
 		tmp = *stack;
 		while (tmp->next)
 			tmp = tmp->next;
-		new->prev = tmp;
-		new->next = NULL;
-		tmp->next = new;
+		new->prev = tmp, new->next = NULL, tmp->next = new;
 	}
 }
 
