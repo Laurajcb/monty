@@ -1,5 +1,6 @@
 #include "monty.h"
 
+char *get_int(int num);
 unsigned int _abs(int);
 int get_numbase_len(unsigned int num, unsigned int base);
 void fill_numbase_buff(unsigned int num, unsigned int base,
@@ -17,7 +18,7 @@ void set_op_tok_error(int error_code)
 
 	toks_len = token_arr_len();
 	new_toks = malloc(sizeof(char *) * (toks_len + 2));
-	if (!new_toks)
+	if (!op_toks)
 	{
 		malloc_error();
 		return;
