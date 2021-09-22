@@ -118,6 +118,8 @@ int run_monty(FILE *script_fd)
 		l_n++, op_toks = strtow(line, DELIMS);
 		if (op_toks == NULL)
 		{
+			if (is_empty_line(line, DELIMS))
+				continue;
 			free_stack(&stack);
 			return (malloc_error());
 		}
