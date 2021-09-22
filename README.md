@@ -51,8 +51,7 @@ $ ./monty bytecode_file
 [__pushmode_](./opcode_funct4.c)|Function Push a new element in the stack depent if is stack or queue|
 [__stack_](./opcode_funct4.c)|Function Converts a queue to a stack|
 [___queue_](./opcode_funct4.c)|Function Converts a stack to a queue|
-[__check_mode_](./opcode_funct4.c)|Function that Checks if a stack_t linked list is in stack or queue mode.|
-|
+[__check_mode_](./opcode_funct4.c)|Function that Checks if a stack_t linked list is in stack or queue mode.||
 
 
 ### Example
