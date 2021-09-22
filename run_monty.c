@@ -152,13 +152,11 @@ int run_monty(FILE *script_fd)
 		free_tokens();
 	}
 	free_stack(&stack);
-
 	if (line && *line == 0)
 	{
 		free(line);
 		return (malloc_error());
 	}
-
 	free(line);
 	return (exit_status);
 }
