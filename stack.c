@@ -1,8 +1,6 @@
 #include "monty.h"
 #include <string.h>
 
-void free_stack(stack_t **stack);
-int init_stack(stack_t **stack);
 
 /**
  * free_stack - Frees a stack_t stack.

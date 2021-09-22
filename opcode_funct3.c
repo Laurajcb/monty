@@ -8,22 +8,19 @@
 
 void _mod(stack_t **stack, unsigned int line_number)
 {
-	int result = 0;
-
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		set_op_tok_error(short_stack_error(line_number, "mod"));
 		return;
 	}
+
 	if ((*stack)->next->n == 0)
 	{
 		set_op_tok_error(div_error(line_number));
 		return;
 	}
 
-	result = (*stack)->next->next->n % (*stack)->next->n;
-
-	(*stack)->next->next->n = result;
+	(*stack)->next->next->n %= (*stack)->next->n;
 	_pop(stack, line_number);
 }
 
@@ -44,9 +41,10 @@ void _pchar(stack_t **stack, unsigned int line_number)
 	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
 	{
 		set_op_tok_error(pchar_error(line_number,
-									 "value out of range"));
+					     "value out of range"));
 		return;
 	}
+
 	printf("%c\n", (*stack)->next->n);
 }
 
@@ -58,17 +56,17 @@ void _pchar(stack_t **stack, unsigned int line_number)
 
 void _pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *list = (*stack)->next;
-	(void)line_number;
+	stack_t *tmp = (*stack)->next;
 
-	while (list)
+	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
 	{
-		if (list->n == 0 && list->n <= 126)
-			printf("%c", list->n);
-
-		list = list->next;
+		printf("%c", tmp->n);
+		tmp = tmp->next;
 	}
+
 	printf("\n");
+
+	(void)line_number;
 }
 
 /**
@@ -79,21 +77,23 @@ void _pstr(stack_t **stack, unsigned int line_number)
 
 void _rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *list, *end;
-	(void)line_number;
-
-	list = end = (*stack)->next;
+	stack_t *top, *bottom;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
-	while (end->next)
-		end = end->next;
 
-	list->next->prev = (*stack);
-	(*stack)->next = list->next;
-	end->next = list;
-	list->next = NULL;
-	list->prev = end;
+	top = (*stack)->next;
+	bottom = (*stack)->next;
+	while (bottom->next != NULL)
+		bottom = bottom->next;
+
+	top->next->prev = *stack;
+	(*stack)->next = top->next;
+	bottom->next = top;
+	top->next = NULL;
+	top->prev = bottom;
+
+	(void)line_number;
 }
 
 /**
@@ -104,19 +104,21 @@ void _rotl(stack_t **stack, unsigned int line_number)
 
 void _rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *end, *head = (*stack)->next;
-	(void)line_number;
+	stack_t *top, *bottom;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
 
-	end = (*stack)->next;
-	while (end->next != NULL)
-		end = end->next;
+	top = (*stack)->next;
+	bottom = (*stack)->next;
+	while (bottom->next != NULL)
+		bottom = bottom->next;
 
-	end->prev->next = NULL;
-	(*stack)->next = end;
-	end->prev = *stack;
-	end->next = head;
-	head->prev = end;
+	bottom->prev->next = NULL;
+	(*stack)->next = bottom;
+	bottom->prev = *stack;
+	bottom->next = top;
+	top->prev = bottom;
+
+	(void)line_number;
 }

@@ -8,17 +8,13 @@
 
 void _add(stack_t **stack, unsigned int line_number)
 {
-	int sum = 0;
-
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		set_op_tok_error(short_stack_error(line_number, "add"));
 		return;
 	}
 
-	sum = (*stack)->next->n + (*stack)->next->next->n;
-
-	(*stack)->next->next->n = sum;
+	(*stack)->next->next->n += (*stack)->next->n;
 	_pop(stack, line_number);
 }
 
@@ -43,16 +39,13 @@ void _nop(stack_t **stack, unsigned int line_number)
 void _sub(stack_t **stack, unsigned int line_number)
 {
 
-	int result = 0;
-
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		set_op_tok_error(short_stack_error(line_number, "sub"));
 		return;
 	}
-	result = (*stack)->next->next->n - (*stack)->next->n;
 
-	(*stack)->next->next->n = result;
+	(*stack)->next->next->n -= (*stack)->next->n;
 	_pop(stack, line_number);
 }
 /**
@@ -64,22 +57,19 @@ void _sub(stack_t **stack, unsigned int line_number)
 void _div(stack_t **stack, unsigned int line_number)
 {
 
-	int result = 0;
-
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		set_op_tok_error(short_stack_error(line_number, "div"));
 		return;
 	}
+
 	if ((*stack)->next->n == 0)
 	{
 		set_op_tok_error(div_error(line_number));
 		return;
 	}
 
-	result = (*stack)->next->next->n / (*stack)->next->n;
-
-	(*stack)->next->next->n = result;
+	(*stack)->next->next->n /= (*stack)->next->n;
 	_pop(stack, line_number);
 }
 /**
@@ -90,15 +80,12 @@ void _div(stack_t **stack, unsigned int line_number)
 
 void _mul(stack_t **stack, unsigned int line_number)
 {
-	int result = 0;
-
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		set_op_tok_error(short_stack_error(line_number, "mul"));
 		return;
 	}
-	result = (*stack)->next->next->n * (*stack)->next->n;
 
-	(*stack)->next->next->n = result;
+	(*stack)->next->next->n *= (*stack)->next->n;
 	_pop(stack, line_number);
 }

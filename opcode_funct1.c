@@ -8,11 +8,11 @@
 
 void _push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new_node = NULL;
-	unsigned int i = 0;
+	stack_t *tmp, *new;
+	int i;
 
-	new_node = malloc(sizeof(stack_t));
-	if (new_node == NULL)
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
 	{
 		set_op_tok_error(malloc_error());
 		return;
@@ -32,15 +32,25 @@ void _push(stack_t **stack, unsigned int line_number)
 			return;
 		}
 	}
-	new_node->n = atoi(op_toks[1]);
+	new->n = atoi(op_toks[1]);
 
-	if (check_mode(*stack) == STACK)
+	if (check_mode(*stack) == STACK) /* STACK mode insert at front */
 	{
-		_pushmode(0, stack, new_node);
+		tmp = (*stack)->next;
+		new->prev = *stack;
+		new->next = tmp;
+		if (tmp)
+			tmp->prev = new;
+		(*stack)->next = new;
 	}
-	else
+	else /* QUEUE mode insert at end */
 	{
-		_pushmode(1, stack, new_node);
+		tmp = *stack;
+		while (tmp->next)
+			tmp = tmp->next;
+		new->prev = tmp;
+		new->next = NULL;
+		tmp->next = new;
 	}
 }
 
@@ -52,14 +62,14 @@ void _push(stack_t **stack, unsigned int line_number)
 
 void _pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *list = *stack;
-	(void)line_number;
+	stack_t *tmp = (*stack)->next;
 
-	while (list)
+	while (tmp)
 	{
-		printf("%d\n", list->n);
-		list = list->next;
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
 	}
+	(void)line_number;
 }
 /**
  * _pint -Get the value of the top of the stack
@@ -69,15 +79,13 @@ void _pall(stack_t **stack, unsigned int line_number)
 
 void _pint(stack_t **stack, unsigned int line_number)
 {
-	(void)line_number;
-
 	if ((*stack)->next == NULL)
 	{
 		set_op_tok_error(pint_error(line_number));
 		return;
 	}
 
-	printf("%d\n", (*stack)->n);
+	printf("%d\n", (*stack)->next->n);
 }
 /**
  * _pop -Function removes the top element of the stack.
@@ -97,11 +105,8 @@ void _pop(stack_t **stack, unsigned int line_number)
 
 	next = (*stack)->next->next;
 	free((*stack)->next);
-
 	if (next)
-	{
 		next->prev = *stack;
-	}
 	(*stack)->next = next;
 }
 
@@ -113,7 +118,7 @@ void _pop(stack_t **stack, unsigned int line_number)
 
 void _swap(stack_t **stack, unsigned int line_number)
 {
-	int trade;
+	stack_t *tmp;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
@@ -121,8 +126,12 @@ void _swap(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	trade = (*stack)->next->next->n;
-
-	(*stack)->next->next->n = (*stack)->next->n;
-	(*stack)->next->n = trade;
+	tmp = (*stack)->next->next;
+	(*stack)->next->next = tmp->next;
+	(*stack)->next->prev = tmp;
+	if (tmp->next)
+		tmp->next->prev = (*stack)->next;
+	tmp->next = (*stack)->next;
+	tmp->prev = *stack;
+	(*stack)->next = tmp;
 }
