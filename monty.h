@@ -92,5 +92,6 @@ int pop_error(unsigned int line_number);
 int pchar_error(unsigned int line_number, char *message);
 int pint_error(unsigned int line_number);
 
+int check_status(int prev_tok_len);
 
 #endif
