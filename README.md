@@ -18,7 +18,7 @@ pall$
 Holberton:~/monty$
 ```
 
-### compilation 
+### compilation
 ```
 $ gcc -Wall -Werror -Wextra -pedantic *.c -o monty
 
