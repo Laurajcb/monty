@@ -7,7 +7,7 @@
  * Return: exit status.
  */
 int check_status(int prev_tok_len)
-{	
+{
 	int exit_status;
 
 	if (op_toks && op_toks[prev_tok_len])
@@ -15,6 +15,6 @@ int check_status(int prev_tok_len)
 	else
 		exit_status = EXIT_FAILURE;
 	free_tokens();
-	
-	return(exit_status);
+
+	return (exit_status);
 }
